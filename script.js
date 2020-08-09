@@ -20,8 +20,14 @@ window.addEventListener("mousemove", event => {
   mouse.y = event.y;
 });
 
-ctx.fillStyle = "white";
+// ctx.fillStyle = "white";
 ctx.font = "20px Verdana";
+var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+gradient.addColorStop("0", " magenta");
+gradient.addColorStop("0.5", "blue");
+gradient.addColorStop("1.0", "red");
+// Fill with gradient
+ctx.fillStyle = gradient;
 ctx.fillText("Aww Snap", 0, 40);
 const textCoordinates = ctx.getImageData(0, 0, 1000, 1000);
 
@@ -59,12 +65,12 @@ class Particle {
     if (distance < mouse.radius) {
       this.x -= directionX;
       this.y -= directionY;
-      this.color = "yellow";
+      this.color = gradient;
     } else {
       if (this.x !== this.baseX) {
         let dx = this.x - this.baseX;
         this.x -= dx / 20;
-        this.color = "white";
+        this.color = gradient;
       }
       if (this.y !== this.baseY) {
         let dy = this.y - this.baseY;
@@ -114,7 +120,7 @@ function connect() {
       let color = "white";
       //   If the mouse is close to our particle
       if (particleArray[a].distance < mouse.radius) {
-        color = "yellow";
+        color = gradient;
       }
 
       if (distance < 20) {
@@ -130,29 +136,3 @@ function connect() {
     }
   }
 }
-
-const randomColor = () => {
-  let chars = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f"
-  ];
-  let color = ["#"];
-  for (let i = 0; i < 6; i++) {
-    color.push(chars[Math.floor(Math.random() * chars.length)]);
-  }
-  return color.join("");
-};
